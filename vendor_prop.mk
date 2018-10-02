@@ -145,8 +145,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # NFC
 PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hardware.nfc_nci=nqx.default \
     ro.nfc.port=I2C \
     persist.nfc.smartcard.config=SIM1,eSE1
+
+# OTG support
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.oem.otg_support=true
 
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -192,7 +197,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.radio.hw_mbn_update=0 \
     persist.radio.sw_mbn_update=0 \
     persist.radio.start_ota_daemon=0 \
-    persist.vendor.ims.dropset_feature=0 \
     persist.vendor.radio.custom_ecc=1 \
     persist.vendor.radio.data_con_rprt=1 \
     persist.vendor.radio.data_ltd_sys_ind=1 \

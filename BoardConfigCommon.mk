@@ -62,7 +62,7 @@ TARGET_USES_UEFI := true
 TARGET_USES_64_BIT_BINDER := true
 
 # Kernel
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x237 ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=2048
+BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom ehci-hcd.park=3 lpm_levels.sleep_disabled=1 sched_enable_hmp=1 sched_enable_power_aware=1 service_locator.enable=1 swiotlb=2048
 BOARD_KERNEL_CMDLINE += androidboot.configfs=true
 BOARD_KERNEL_CMDLINE += androidboot.wificountrycode=US
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
@@ -238,8 +238,8 @@ TARGET_PROVIDES_LIBLIGHT := true
 BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/lineagehw
 
 # NFC
-BOARD_NFC_CHIPSET := PN553
-BOARD_NFC_HAL_SUFFIX := msm8998
+BOARD_NFC_CHIPSET := pn553
+TARGET_USES_NQ_NFC := true
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
@@ -277,11 +277,11 @@ PROTOBUF_SUPPORTED := true
 BOARD_ROOT_EXTRA_FOLDERS := bt_firmware dsp firmware persist
 
 # SELinux
-#include device/qcom/sepolicy/sepolicy.mk
+include device/qcom/sepolicy/sepolicy.mk
 
-#BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy/vendor
-#BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(PLATFORM_PATH)/sepolicy/public
-#BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(PLATFORM_PATH)/sepolicy/private
+BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy/vendor
+BOARD_PLAT_PUBLIC_SEPOLICY_DIR += $(PLATFORM_PATH)/sepolicy/public
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(PLATFORM_PATH)/sepolicy/private
 
 # Timeservice
 BOARD_USES_QC_TIME_SERVICES := true
@@ -296,6 +296,7 @@ PRODUCT_SHIPPING_API_LEVEL := 25
 BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
 
 # Wifi
+BOARD_USES_AOSP_WLAN_HAL := true
 BOARD_HAS_QCOM_WLAN := true
 BOARD_HAS_QCOM_WLAN_SDK := true
 BOARD_WLAN_DEVICE := qcwcn

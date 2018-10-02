@@ -83,6 +83,13 @@ PRODUCT_COPY_FILES += \
 # Haters gonna hate..
 PRODUCT_CHARACTERISTICS := nosdcard
 
+# ARCore
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.calibration_cad=/system/etc/calibration_cad.xml
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/calibration_cad.xml:system/etc/calibration_cad.xml
+
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
@@ -140,7 +147,7 @@ PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-service \
     camera.device@1.0-impl \
     camera.device@3.2-impl \
-    Snap
+    GoogleCamera
 
 PRODUCT_PACKAGES += \
     vendor.qti.hardware.camera.device@1.0 \
@@ -234,8 +241,7 @@ PRODUCT_PACKAGES += \
 
 # Init
 PRODUCT_COPY_FILES += \
-    $(call find-copy-subdir-files,*,${LOCAL_PATH}/init/vendor,$(TARGET_COPY_OUT_VENDOR))
-
+    $(call find-copy-subdir-files,*,${LOCAL_PATH}/prebuilt/vendor,$(TARGET_COPY_OUT_VENDOR))
 
 # IFAA (Fingerprint support for Alipay)
 PRODUCT_PACKAGES += \
@@ -299,14 +305,24 @@ PRODUCT_PACKAGES += \
 
 # NFC
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.1-service \
+    android.hardware.nfc@1.0-impl \
     com.android.nfc_extras \
-    NfcNci \
-    Tag
+    com.nxp.nfc.nq \
+    com.nxp.nfc.nq.xml \
+    libnqnfc-nci \
+    libnqp61-jcop-kit \
+    nfc_nci.nqx.default \
+    NQNfcNci \
+    nqnfcee_access.xml \
+    nqnfcse_access.xml \
+    SecureElement \
+    Tag \
+    vendor.nxp.hardware.nfc@1.1-service
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/nfc/libnfc-nci.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nci.conf \
-    $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf
+    $(LOCAL_PATH)/configs/nfc/libnfc-nxp.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-nxp.conf \
+    $(LOCAL_PATH)/configs/nfc/libnfc-brcm.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-brcm.conf \
 
 # OMX
 PRODUCT_PACKAGES += \
@@ -326,6 +342,15 @@ PRODUCT_PACKAGES += \
 # Privapp Whitelist
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/privapp-permissions-qti.xml
+
+# Prebuilts
+PRODUCT_PACKAGES += \
+    OnePlusCamera \
+    OnePlusGallery \
+    OnePlusCameraService
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/prebuilts/addon.d/51-oneplus-camera.sh:system/addon.d/51-oneplus-camera.sh  \
+    $(LOCAL_PATH)/prebuilts/etc/permissions/privapp-permissions-oem.xml:system/etc/permissions/privapp-permissions-oem.xml
 
 # Power
 PRODUCT_PACKAGES += \
@@ -411,6 +436,9 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vndk_package
 
+PRODUCT_COPY_FILES += \
+    prebuilts/vndk/v27/arm64/arch-arm64-armv8-a/shared/vndk-core/android.hardware.gnss@1.0.so:$(TARGET_COPY_OUT_VENDOR)/lib64/android.hardware.gnss@1.0-v27.so
+
 # VNDK-SP
 PRODUCT_PACKAGES += \
     vndk-sp
@@ -428,6 +456,8 @@ PRODUCT_PACKAGES += \
 # Wifi
 PRODUCT_PACKAGES += \
     android.hardware.wifi@1.0-service \
+    libwpa_client \
+    readmac \
     hostapd \
     hostapd_cli \
     libqsap_sdk \
